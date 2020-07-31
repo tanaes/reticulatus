@@ -13,6 +13,7 @@ dependencies:
   - pandas
   - biopython
   - minimap2
+  - entrez-direct
   - racon
   - seqtk
   - kraken2
