@@ -478,6 +478,7 @@ rule polish_medaka:
 rule download_dehumanizer_database:
     output:
         os.path.join(config["dehumanizer_database_root"], "{genome}.mmi")
+    conda: "environments/entrez.yaml"
     shell:
         "bash ../scripts/minimapit.sh {0} {1}".format(wildcards.genome,
                                                       output)
