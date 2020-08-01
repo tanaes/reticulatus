@@ -28,86 +28,86 @@ wildcard_constraints:
     depth="\d*?",		# Optionally match an integer added after readtype
     iteration="\d+",
 
-# def base_onstart():
-#     #for a in enumerate_assemblies(base_only=False, unroll=False, suffix=".fa"):
-#     #    sys.stderr.write("*\t%s\n" % a)
+def base_onstart():
+    #for a in enumerate_assemblies(base_only=False, unroll=False, suffix=".fa"):
+    #    sys.stderr.write("*\t%s\n" % a)
 
-#     rprefix = "set -euo pipefail; touch %s; " % os.path.join(WORKDIR, "flags", "{jobid}.start")
-#     if workflow.global_resources.get('benchmark', False):
-#         rprefix += "python3 ../scripts/benchmarking/drop_cache_client.py; "
+    rprefix = "set -euo pipefail; touch %s; " % os.path.join(WORKDIR, "flags", "{jobid}.start")
+    if workflow.global_resources.get('benchmark', False):
+        rprefix += "python3 ../scripts/benchmarking/drop_cache_client.py; "
 
-#     shell.prefix(rprefix)
-#     shell.suffix("; touch %s;" % os.path.join(WORKDIR, "flags", "{jobid}.finish"))
+    shell.prefix(rprefix)
+    shell.suffix("; touch %s;" % os.path.join(WORKDIR, "flags", "{jobid}.finish"))
 
-#     import snakemake.benchmark
-#     import benchmark as rbenchmark
-#     snakemake.benchmark.BenchmarkRecord = rbenchmark.BenchmarkRecord
-#     snakemake.benchmark.benchmarked = rbenchmark.benchmarked
-#     sys.modules['snakemake.benchmark'] = snakemake.benchmark
+    import snakemake.benchmark
+    import benchmark as rbenchmark
+    snakemake.benchmark.BenchmarkRecord = rbenchmark.BenchmarkRecord
+    snakemake.benchmark.benchmarked = rbenchmark.benchmarked
+    sys.modules['snakemake.benchmark'] = snakemake.benchmark
 
-#     print("snakefile: ", workflow.snakefile)
-#     os.makedirs('flags', exist_ok=True)
+    print("snakefile: ", workflow.snakefile)
+    os.makedirs('flags', exist_ok=True)
 
-#     job_bins = {}
-#     for job in workflow.persistence.dag.jobs:
-#         sample = job.wildcards.get('uuid', 'default')
-#         if sample not in job_bins:
-#             job_bins[sample] = []
-#         job_bins[sample].append(job)
+    job_bins = {}
+    for job in workflow.persistence.dag.jobs:
+        sample = job.wildcards.get('uuid', 'default')
+        if sample not in job_bins:
+            job_bins[sample] = []
+        job_bins[sample].append(job)
 
-#     sample_deps = {}
-#     def tree_sjob(job, ptr=None, depth=0, sample=None):
-#         if job.jobid == 0:
-#             return
+    sample_deps = {}
+    def tree_sjob(job, ptr=None, depth=0, sample=None):
+        if job.jobid == 0:
+            return
 
-#         if not sample:
-#             sample = job.wildcards.get('uuid', 'default')
-#         if sample not in sample_deps:
-#             sample_deps[sample] = {}
-#         if ptr is None:
-#             ptr = sample_deps[sample]
+        if not sample:
+            sample = job.wildcards.get('uuid', 'default')
+        if sample not in sample_deps:
+            sample_deps[sample] = {}
+        if ptr is None:
+            ptr = sample_deps[sample]
 
-#         if job not in ptr:
-#             ptr[job] = {"__depth": depth}
-#             ptr = ptr[job]
+        if job not in ptr:
+            ptr[job] = {"__depth": depth}
+            ptr = ptr[job]
 
-#         if ptr["__depth"] < depth:
-#             ptr["__depth"] = depth
+        if ptr["__depth"] < depth:
+            ptr["__depth"] = depth
 
-#         deps = workflow.persistence.dag.depending[job]
-#         for job in deps:
-#             #if job in workflow.persistence.dag.needrun_jobs:
-#             tree_sjob(job, ptr, depth+1)
+        deps = workflow.persistence.dag.depending[job]
+        for job in deps:
+            #if job in workflow.persistence.dag.needrun_jobs:
+            tree_sjob(job, ptr, depth+1)
 
-#     finish = next(workflow.persistence.dag.jobs)
-#     if not finish.name.startswith("finish"):
-#         print("Not like this."); sys.exit(80);
+    finish = next(workflow.persistence.dag.jobs)
+    if not finish.name.startswith("finish"):
+        print("Not like this."); sys.exit(80);
 
-#     for sample in job_bins:
-#         if sample == "default": continue
-#         for job in job_bins[sample]:
-#             waiting = set(workflow.persistence.dag.dependencies[job]).intersection(workflow.persistence.dag.needrun_jobs)
-#             if len(waiting) == 0 or (len(waiting) == 1 and finish in waiting):
-#                 tree_sjob(job, sample=sample)
+    for sample in job_bins:
+        if sample == "default": continue
+        for job in job_bins[sample]:
+            waiting = set(workflow.persistence.dag.dependencies[job]).intersection(workflow.persistence.dag.needrun_jobs)
+            if len(waiting) == 0 or (len(waiting) == 1 and finish in waiting):
+                tree_sjob(job, sample=sample)
     
-#     status_fh = open("flags/q.txt", "w")
-#     def print_sjob(head, seen, depth=0, sample=""):
-#         for job in head:
-#             if job in seen or str(job).startswith("__"):
-#                 continue
-#             seen.add(job)
-#             print("\t".join([str(x) for x in [head[job]["__depth"], '*' if job in workflow.persistence.dag.needrun_jobs else '-', job.jobid, job.rule]]))
-#             status_fh.write("\t".join([str(x) for x in [sample, head[job]["__depth"], '*' if job in workflow.persistence.dag.needrun_jobs else '-', job.jobid, job.rule]]) + '\n')
-#             print_sjob(head[job], seen, depth+1, sample)
+    status_fh = open("flags/q.txt", "w")
+    def print_sjob(head, seen, depth=0, sample=""):
+        for job in head:
+            if job in seen or str(job).startswith("__"):
+                continue
+            seen.add(job)
+            print("\t".join([str(x) for x in [head[job]["__depth"], '*' if job in workflow.persistence.dag.needrun_jobs else '-', job.jobid, job.rule]]))
+            status_fh.write("\t".join([str(x) for x in [sample, head[job]["__depth"], '*' if job in workflow.persistence.dag.needrun_jobs else '-', job.jobid, job.rule]]) + '\n')
+            print_sjob(head[job], seen, depth+1, sample)
     
-#     for sample in sample_deps:
-#         print(sample)
-#         #print_sjob(sample_deps[sample], set([]), sample=sample)
-#     status_fh.close()
+    for sample in sample_deps:
+        print(sample)
+        #print_sjob(sample_deps[sample], set([]), sample=sample)
+    status_fh.close()
 
-# ONSTART_QUEUE = [base_onstart]
-# onstart:
-#     [f() for f in ONSTART_QUEUE]
+ONSTART_QUEUE = [base_onstart]
+onstart:
+    [f() for f in ONSTART_QUEUE]
 
 onsuccess:
     # TODO Need to update https://github.com/slackapi/python-slackclient/wiki/Migrating-to-2.x
