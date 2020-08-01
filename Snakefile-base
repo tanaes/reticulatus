@@ -480,8 +480,8 @@ rule download_dehumanizer_database:
         os.path.join(config["dehumanizer_database_root"], "{genome}.mmi")
     conda: "environments/entrez.yaml"
     shell:
-        "bash ../scripts/minimapit.sh {0} {1}".format(wildcards.genome,
-                                                      output)
+        "bash ../scripts/minimapit.sh {wildcards.genome} {output}"
+                                              
 
 rule make_dehumanizer_manifest:
     input:
@@ -491,9 +491,9 @@ rule make_dehumanizer_manifest:
         ok=touch(os.path.join(config["dehumanizer_database_root"], "dehuman.ok")),
         manifest=os.path.join(config["dehumanizer_database_root"], "manifest.txt")
     run:
-        with open(manifest, 'w') as f:
+        with open({output.manifest}, 'w') as f:
             for i in input:
-                f.write('{0} {1}\n'.format(i, input[i]))
+                f.write('{0} {1}\n'.format(i, {input[i]}))
 
 rule polish_dehumanizer:
     input:
