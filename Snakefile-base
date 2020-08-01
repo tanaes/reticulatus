@@ -5,6 +5,7 @@ import sys
 import time
 from spellbook import spells
 from shell import shell # override the default shell
+from os.path import basename, splitext
 
 shell.executable('bash')
 
@@ -505,7 +506,9 @@ rule make_dehumanizer_manifest:
     run:
         with open(output.manifest, 'w') as f:
             for i in input:
-                f.write('{0} {1}\n'.format(i, input[i]))
+                base = basename(i)
+                genome = splitext(base)[0]
+                f.write('{0} {1}\n'.format(genome, i))
 
 rule polish_dehumanizer:
     input:
