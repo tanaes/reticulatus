@@ -483,7 +483,8 @@ rule download_dehumanizer_database:
         acc=lambda wildcards: config['host_dbs'][wildcards.genome],
         api_key=config['ncbi_key']
     shell:
-        "esearch -db assembly -query {params.acc}&api_key={params.api_key} | elink -target nucleotide -name \
+        "export NCBI_API_KEY={api_key}; \
+         esearch -db assembly -query {params.acc}&api_key={params.api_key} | elink -target nucleotide -name \
          assembly_nuccore_refseq | efetch -format fasta > {output}"
 
 rule make_dumanizer_db_index:
