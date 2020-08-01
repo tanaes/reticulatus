@@ -479,9 +479,10 @@ rule download_dehumanizer_database:
     output:
         os.path.join(config["dehumanizer_database_root"], "{genome}.mmi")
     conda: "environments/entrez.yaml"
+    params:
+        api_key=config['ncbi_key']
     shell:
-        "bash ../scripts/minimapit.sh {wildcards.genome} {output}"
-                                              
+        "bash ../scripts/minimapit.sh {wildcards.genome} {output} {params.api_key}"
 
 rule make_dehumanizer_manifest:
     input:
