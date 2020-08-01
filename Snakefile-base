@@ -483,8 +483,8 @@ rule download_dehumanizer_database:
         acc=lambda wildcards: config['host_dbs'][wildcards.genome],
         api_key=config['ncbi_key']
     shell:
-        "esearch -db assembly -query ${params.acc}&api_key=${params.api_key} | elink -target nucleotide -name \
-         assembly_nuccore_refseq | efetch -format fasta > ${output}"
+        "esearch -db assembly -query {params.acc}&api_key={params.api_key} | elink -target nucleotide -name \
+         assembly_nuccore_refseq | efetch -format fasta > {output}"
 
 rule make_dumanizer_db_index:
     input:
@@ -492,7 +492,7 @@ rule make_dumanizer_db_index:
     output:
         os.path.join(config["dehumanizer_database_root"], "{genome}.mmi")
     shell:
-        "minimap2 -d ${output} ${input}"
+        "minimap2 -d {output} {input}"
 
 rule make_dehumanizer_manifest:
     input:
