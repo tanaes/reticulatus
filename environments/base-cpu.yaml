@@ -23,6 +23,6 @@ dependencies:
   - pip:
     - git+https://github.com/SamStudio8/bondage.git
     - git+https://github.com/SamStudio8/dehumanizer.git
-    - git+https://github.com/SamStudio8/ktkit.git
+    - git+https://github.com/tanaes/ktkit.git@patch
     - slackclient==1.3.1
     - GPUtil
