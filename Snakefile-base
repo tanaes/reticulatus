@@ -661,7 +661,7 @@ rule flye_assembly:
     threads: lambda w: n_threads(w, "assembly_threads")
     resources:
         benchmark=1,
-        mem_gb=config[assembly_mem_gb]
+        mem_mb=config[assembly_mem_mb]
     benchmark: "benchmarks/{uuid}.{conf,flye[A-z0-9_-]*}_assembly.fa"
     log: "log/{uuid}.{conf,flye[A-z0-9_-]*}_assembly.fa"
     shell:
