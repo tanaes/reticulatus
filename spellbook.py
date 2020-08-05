@@ -29,6 +29,14 @@ flye25 = deepcopy(flye_default)
 flye25.update({
     "hash": "af246d6a942bbc57fe02049bee92645f43c87b62",
 })
+
+
+flye28 = deepcopy(flye_default)
+flye28.update({
+    "hash": "91e8b13d69293dbf32330b54180384245a0f6f67",
+    "genome_size": "-"
+})
+
 flye25_0polish = deepcopy(flye25)
 flye25_0polish.update({
     "iterations": 0,

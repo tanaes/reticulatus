@@ -652,7 +652,7 @@ rule flye_assembly:
         overlap=lambda w: '-m %s' % spells[w.conf]['m'] if spells[w.conf]['m'] != '-' else '',
         meta=lambda w: '--meta' if spells[w.conf]['meta'] else '',
         plasmids=lambda w: '--plasmids' if spells[w.conf]['plasmids'] else '',
-        genome_size=lambda w: spells[w.conf]['genome_size'],
+        genome_size=lambda w: '-g %s' % spells[w.conf]['genome_size'] if spells[w.conf]['genome_size'] != '-' else '',
         d = "{uuid}.{conf,flye[A-z0-9_-]*}/",
         iterations=lambda w: '--iterations %s' % spells[w.conf]['iterations'] if 'iterations' in spells[w.conf] else '',
     output:
@@ -665,7 +665,7 @@ rule flye_assembly:
     benchmark: "benchmarks/{uuid}.{conf,flye[A-z0-9_-]*}_assembly.fa"
     log: "log/{uuid}.{conf,flye[A-z0-9_-]*}_assembly.fa"
     shell:
-        "git/{wildcards.conf}/Flye/bin/flye --nano-raw {input.reads} {params.meta} {params.plasmids} -g {params.genome_size} -o {params.d} -t {threads} {params.overlap} {params.iterations} > {log} 2>&1"
+        "git/{wildcards.conf}/Flye/bin/flye --nano-raw {input.reads} {params.meta} {params.plasmids} {params.genome_size} -o {params.d} -t {threads} {params.overlap} {params.iterations} > {log} 2>&1"
 
 rule link_flye_assembly:
     input: "{uuid}.{conf}/assembly.fasta"
