@@ -53,5 +53,6 @@ redbean24.update({
 spells = {
     "flye25-0polish" : flye25_0polish,
     "flye25" : flye25,
+    "flye28": flye28,
     "wtdbg2-24" : redbean24
 }
