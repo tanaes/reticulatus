@@ -519,7 +519,7 @@ rule polish_dehumanizer:
         "{uuid}.{conf}.ctg.cns.{polishedprefix}{polisher,dehumanizer}-{readtype}-{iteration}.fa"
     threads: 2
     shell:
-        "dehumanize {input.manifest} {input.contigs} {output}"
+        "dehumanize {input.manifest} --fastx {input.contigs} --preset map-ont -o {output}"
 
 rule download_pilon:
     output: "pilon-1.23.jar"
