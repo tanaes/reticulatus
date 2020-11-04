@@ -547,7 +547,7 @@ rule polish_pilon:
     benchmark: "benchmarks/{uuid}.{conf}.ctg.cns.{polishedprefix}{polisher,pilon}-{readtype}-{iteration}.fa"
     log: "log/{uuid}.{conf}.ctg.cns.{polishedprefix}{polisher,pilon}-{readtype}-{iteration}.fa"
     shell:
-        "minimap2 -t {threads} -ax {params.mode} {input.contigs} {input.reads} > {output}.sam; samtools sort {output}.sam -T {wildcards.uuid} %s -@ {threads} -o {output}.bam; samtools index {output}.bam; java -Xmx16G -jar {input.pilon} --genome {input.contigs} --bam {output}.bam --outdir pilon-{wildcards.uuid}/ 2> {log}; mv pilon-{wildcards.uuid}/pilon.fasta {output}" % config["sort_flags"]
+        "minimap2 -t {threads} -ax {params.mode} {input.contigs} {input.reads} > {output}.sam; samtools sort {output}.sam -T {wildcards.uuid} %s -@ {threads} -o {output}.bam; samtools index {output}.bam; java -Xmx500G -jar {input.pilon} --genome {input.contigs} --bam {output}.bam --outdir pilon-{wildcards.uuid}/ 2> {log}; mv pilon-{wildcards.uuid}/pilon.fasta {output}" % config["sort_flags"]
 
 rule summarise_assembly_stats:
     input:
