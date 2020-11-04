@@ -1,0 +1,35 @@
+dehumanizer_database_root:
+    "/workdir/dbs/dh"
+kraken2_database_root:
+    "/workdir/dbs/kraken2"
+ktkit_database_root:
+    "/workdir/dbs/ktkit"
+slack_token:
+    "xoxb-442240163217-1275456198003-GVMD1zCAl233XwYT8JUpESj4"
+slack_channel:
+    "#compute"
+cuda:
+    False
+medaka_env:
+    "library://samstudio8/default/cuda9-cudnn7-ubuntu1604-prom:sha256.14a07fc2a8001ddb98e681cf49e72e408b0e343c6f886795382dd0f11ca23417"
+racon_batches:
+     16
+polish_threads:
+     8
+polish_gpu:
+     2
+assembly_threads:
+     8
+assembly_mem_mb:
+     230000
+minimap2_threads:
+     8
+sort_flags:
+     "-m 4G"
+ncbi_key:
+    729228f37c1129eaf1d229d979f3a7a53808
+host_dbs:
+    Pleucopus: GCA_004664715.1
+    Ppolionotus: GCA_003704135.2
+    Pmaniculatus: GCA_003704035.1
+    Pcalifornicus: GCA_007827085.2
