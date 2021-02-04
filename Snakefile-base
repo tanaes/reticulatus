@@ -324,7 +324,7 @@ rule finish:
         stat="assembly_stats.txt",
         meta="assembly_md5size.txt",
         kraken="kraken_summary.bond.tsv",
-        reads_kraken=enumerate_reads(suffix=".k2kc"),
+        # reads_kraken=enumerate_reads(suffix=".k2kc"),
         base_graphs=enumerate_assemblies(unroll=False, base_only=True, suffix=".gfa.svg"),
         polished=enumerate_assemblies(base_only=False, unroll=False, suffix=".fa"),
     output: touch("reticulated.base.ok")
