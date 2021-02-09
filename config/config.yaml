@@ -29,7 +29,4 @@ sort_flags:
 ncbi_key:
     729228f37c1129eaf1d229d979f3a7a53808
 host_dbs:
-    Pleucopus: GCA_004664715.1
-    Ppolionotus: GCA_003704135.2
-    Pmaniculatus: GCA_003704035.1
-    Pcalifornicus: GCA_007827085.2
+    Chimpanzee: GCA_000001515.5
